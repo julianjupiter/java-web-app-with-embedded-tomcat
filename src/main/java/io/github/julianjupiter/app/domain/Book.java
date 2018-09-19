@@ -1,9 +1,13 @@
 package io.github.julianjupiter.app.domain;
 
+import javax.json.bind.annotation.JsonbNillable;
+
+@JsonbNillable
 public class Book {
 	private long id;
 	private String title;
 	private String edition;
+	
 	private String isbn;
 	private String author;
 	private String yearPublished;
@@ -15,7 +19,7 @@ public class Book {
 	public void setId(long id) {
 		this.id = id;
 	}
-
+	
 	public String getTitle() {
 		return title;
 	}

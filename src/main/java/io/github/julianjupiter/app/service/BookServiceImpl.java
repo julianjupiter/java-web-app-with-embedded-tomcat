@@ -23,14 +23,4 @@ public class BookServiceImpl implements BookService {
 		return this.bookRepository.findById(id);
 	}
 
-	@Override
-	public void save(Book book) {
-		this.bookRepository.save(book);
-	}
-
-	@Override
-	public void remove(long id) {
-		this.bookRepository.remove(id);
-	}
-
 }

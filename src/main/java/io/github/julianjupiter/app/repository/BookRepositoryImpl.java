@@ -42,15 +42,4 @@ public class BookRepositoryImpl implements BookRepository {
 			.findFirst().orElse(null);
 	}
 
-	@Override
-	public void save(Book book) {
-		bookList.add(book);
-	}
-
-	@Override
-	public void remove(long id) {
-		Book book = findById(id);
-		bookList.remove(book);
-	}
-
 }
