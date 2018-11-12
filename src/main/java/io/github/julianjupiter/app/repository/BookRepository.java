@@ -1,13 +1,13 @@
 package io.github.julianjupiter.app.repository;
 
-import java.util.List;
+import java.util.Optional;
 
 import io.github.julianjupiter.app.domain.Book;
 
 public interface BookRepository {
 	
-	List<Book> findAll();
+	Iterable<Book> findAll();
 
-	Book findById(long id);
+	Optional<Book> findById(long id);
 	
 }

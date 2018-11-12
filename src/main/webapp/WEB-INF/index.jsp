@@ -6,6 +6,6 @@
 		<title>Java Web Application with Embedded Tomcat</title>
 	</head>
 	<body>
-		<h1>Error 404, Page not found!</h1>
+		<h1>Hello, world!</h1>
 	</body>
 </html>

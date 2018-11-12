@@ -1,4 +1,3 @@
-<%@ include file="/WEB-INF/templates/includes/head.jsp"%>
 <%@ include file="/WEB-INF/templates/includes/header.jsp"%>
 		<div class="jumbotron jumbotron-fluid">
 			<div class="container">

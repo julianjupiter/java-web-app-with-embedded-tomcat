@@ -3,6 +3,7 @@ package io.github.julianjupiter.app.repository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import io.github.julianjupiter.app.domain.Book;
 
@@ -31,15 +32,15 @@ public class BookRepositoryImpl implements BookRepository {
 	}
 
 	@Override
-	public List<Book> findAll() {
+	public Iterable<Book> findAll() {
 		return bookList;
 	}
 
 	@Override
-	public Book findById(long id) {
+	public Optional<Book> findById(long id) {
 		return bookList.stream()
 			.filter(book -> book.getId() == id)
-			.findFirst().orElse(null);
+			.findFirst();
 	}
 
 }

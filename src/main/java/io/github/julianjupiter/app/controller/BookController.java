@@ -2,9 +2,11 @@ package io.github.julianjupiter.app.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
@@ -21,6 +23,8 @@ import io.github.julianjupiter.app.domain.Book;
 import io.github.julianjupiter.app.repository.BookRepositoryImpl;
 import io.github.julianjupiter.app.service.BookService;
 import io.github.julianjupiter.app.service.BookServiceImpl;
+import io.github.julianjupiter.app.util.Error;
+import io.github.julianjupiter.app.util.ErrorResponse;
 
 @WebServlet(name = "bookController", urlPatterns = "/books")
 public class BookController extends BaseController {
@@ -69,7 +73,7 @@ public class BookController extends BaseController {
 	}
 	
 	private void findAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Book> books = this.bookService.findAll();
+		Iterable<Book> books = this.bookService.findAll();
 		request.setAttribute("pageName", "Books");
 		request.setAttribute("books", books);
 		this.render(request, response, "book/list");
@@ -78,12 +82,21 @@ public class BookController extends BaseController {
 	private void findById(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
 		long bookId = Long.parseLong(id);
-		Book book = this.bookService.findById(bookId);
-		Map<String, Object> config = new HashMap<>();
-		config.put(JsonGenerator.PRETTY_PRINTING, true);
+		Optional<Book> book = this.bookService.findById(bookId);
 		String bookJson;
 		try(Jsonb jsonbObject = JsonbBuilder.create()) {
-			bookJson = jsonbObject.toJson(book);
+			if (book.isPresent()) {
+				response.setStatus(200);
+				bookJson = jsonbObject.toJson(book.get());
+			} else {
+				response.setStatus(404);
+				ErrorResponse errorResponse = new ErrorResponse();
+				Error error = new Error();
+				error.setMessage("Book with ID " + id + " was not found.");
+				error.setCreatedAt(ZonedDateTime.now());
+				errorResponse.setError(error);
+				bookJson = jsonbObject.toJson(error);
+			}
 		}
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

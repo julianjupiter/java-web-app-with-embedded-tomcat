@@ -1,7 +1,6 @@
-<%@ include file="/WEB-INF/templates/includes/head.jsp"%>
-<c:set var="pageName" value="Home"/>
-<%@ include file="/WEB-INF/templates/includes/head.jsp"%>
-<%@ include file="/WEB-INF/templates/includes/header.jsp"%>
+<jsp:include page="/WEB-INF/templates/includes/header.jsp">
+	<jsp:param value="Home" name="pageName"/>
+</jsp:include>
 		<div class="jumbotron jumbotron-fluid">
 			<div class="container">
 		    	<h1 class="display-4">Java Web Application with Embedded Tomcat</h1>

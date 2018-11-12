@@ -12,19 +12,28 @@ function viewBook(bookModal, bookId) {
 	$(bookModal).find(modalFooter).append(closeBookModal);
 
 	fetch('books?action=view&id=' + bookId)
+        .then(response => ({status: response.status, data: response.json()}))
         .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            $(bookModal).find('#bookId').text(data.id);
-            $(bookModal).find('#bookTitle').text(data.title);
-            $(bookModal).find('#bookEdition').text(data.edition);
-            $(bookModal).find('#bookIsbn').text(data.isbn);
-            $(bookModal).find('#bookAuthor').text(data.author);
-            $(bookModal).find('#bookYearPublished').text(data.yearPublished);
+        	if (response.status == 200) {
+        		response.data.then(value => {
+		            $(bookModal).find('#bookId').text(value.id);
+		            $(bookModal).find('#bookTitle').text(value.title);
+		            $(bookModal).find('#bookEdition').text(value.edition);
+		            $(bookModal).find('#bookIsbn').text(value.isbn);
+		            $(bookModal).find('#bookAuthor').text(value.author);
+		            $(bookModal).find('#bookYearPublished').text(value.yearPublished);
+        		});
+        	} else if (response.status == 404) {
+        		response.data.then(value => {
+        			$(bookModal).find('.modal-body').html(value.message);
+        		});
+        	} else {
+        		$(bookModal).find('.modal-body').html('An unknown error occurred. Please contact Administrator.');
+        	}
         })
         .catch(error => {
             console.log('Request failed', error);
+            $(bookModal).find('.modal-body').html('An unknown error occurred. Please contact Administrator.');
 		});
 }
 

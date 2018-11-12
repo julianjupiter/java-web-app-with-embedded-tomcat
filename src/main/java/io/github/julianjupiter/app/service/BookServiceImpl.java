@@ -1,6 +1,6 @@
 package io.github.julianjupiter.app.service;
 
-import java.util.List;
+import java.util.Optional;
 
 import io.github.julianjupiter.app.domain.Book;
 import io.github.julianjupiter.app.repository.BookRepository;
@@ -14,12 +14,12 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<Book> findAll() {
+	public Iterable<Book> findAll() {
 		return this.bookRepository.findAll();
 	}
 
 	@Override
-	public Book findById(long id) {
+	public Optional<Book> findById(long id) {
 		return this.bookRepository.findById(id);
 	}
 
