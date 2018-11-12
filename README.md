@@ -1,6 +1,6 @@
 # Java Web Application with Embedded Tomcat
 
-This is a web application in Java with Apache Tomcat emddeded to the JAR (not WAR), fat JAR. Other dependencies are included the JAR.
+This is a web application in Java with Apache Tomcat embedded to the JAR (not WAR), called fat JAR. Other dependencies are are included in the JAR.
 
 # Running the application
 ```
